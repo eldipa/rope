@@ -1,6 +1,10 @@
 #ifndef ROPE_H_
 #define ROPE_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 struct rope_t {
     unsigned int left_length;
     struct rope_t* left;
@@ -42,14 +46,14 @@ struct rope_t* rope_concat(struct rope_t* left, struct rope_t* right);
 // Split the rope tree in two at the given position.
 // The rope root will hold all the strings with lower positions
 // than the given in the parameter.
-// The ropo returned will hold all the strings with higher postions
+// The rope returned will hold all the strings with higher positions
 // than the given.
 struct rope_t *rope_split(struct rope_t *root, unsigned int position);
 
 // Insert the string data in the rope at the given position.
 // Return the resulting new rope
 struct rope_t* rope_insert(struct rope_t* root, unsigned int position,
-        char* data, unsigned int length);
+        const char* data, unsigned int length);
 
 // Remove the string data in the rope that span the from and to positions.
 // Return the resulting new rope
@@ -59,7 +63,17 @@ struct rope_t* rope_delete(struct rope_t *root, unsigned int from_position,
 // Calculate the absolute position (unsigned) from a given signed one:
 //  - if the given position is positive or zero, that is used as the position
 //    counting from the begin of the rope
-//  - if it is negative, this is interpreted as the position counting from the
-//    the begin: -1 means the last valid position eg.
+//  - if it is negative, this is interpreted as the position counting from
+//    the begin: (-1 means the last valid position).
 unsigned int rope_position(struct rope_t *root, int signed_position);
+
+// Return the string hold in the rope. If buffer is NULL, allocate a
+// buffer with malloc() that you'll have to release later with free().
+// The length and the string are returned.
+char* rope_string(struct rope_t *root, char *buf, unsigned int *length);
+
+#ifdef __cplusplus
+}
+#endif
+
 #endif

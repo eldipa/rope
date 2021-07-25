@@ -5,7 +5,7 @@ export verbose = 0
 # If this flag is '1', each instruction is executed using 'time' and after
 # its execution, the duration of that execution is showed.
 # If it is '0', this is disabled
-export timeit = 1
+export timeit = 0
 
 # These are the modules which will be built. Each module represent a directory
 # relative to the current directory.
@@ -50,7 +50,7 @@ export timeit = 1
 # This is required because the linker must link ONLY ONE target at time and this
 # is implemented filter-out the rest of the targets.
 # Obviously, X.c/X.cpp must have a 'main' function.
-SUBMODULES = lib test
+SUBMODULES = rope test
 
 
 # Tipical flags used by the compiler

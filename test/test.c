@@ -1,4 +1,4 @@
-#include "../lib/rope.h"
+#include "../rope/rope.h"
 
 #include <assert.h>
 #include <stdlib.h>

@@ -119,7 +119,7 @@ struct rope_t *rope_split(struct rope_t *root, unsigned int position) {
 }
 
 struct rope_t* rope_insert(struct rope_t* root, unsigned int position,
-        char* data, unsigned int length) {
+        const char* data, unsigned int length) {
     assert(root);
     assert(data);
     assert(length > 0);
@@ -159,6 +159,30 @@ unsigned int rope_position(struct rope_t *root, int signed_position) {
     }
 }
 
+struct append_ctx_t {
+    char *s;
+    unsigned end;
+};
+
+static
+void append_str_cb(const char *s, unsigned int length, void *ctx) {
+    struct append_ctx_t *c = (struct append_ctx_t*)ctx;
+    memcpy(c->s + c->end, s, length);
+    c->end += length;
+}
+
+char* rope_string(struct rope_t *root, char *buf, unsigned int *length) {
+    struct append_ctx_t ctx = {0};
+    if (buf)
+        ctx.s = buf;
+    else
+        ctx.s = malloc(sizeof(*ctx.s) * rope_length(root));
+
+    rope_iter(root, append_str_cb, &ctx);
+    *length = ctx.end;
+    return ctx.s;
+}
+
 
 static
 bool is_leaf(struct rope_t *root) {
@@ -169,6 +193,4 @@ static
 struct rope_t* empty() {
     return rope_create(0, 0);
 }
-
-
 

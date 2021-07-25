@@ -1,2 +1,2 @@
 TARGET = test
-LIBRARIES = ../lib/librope.a
+LIBRARIES = ../rope/librope.a
