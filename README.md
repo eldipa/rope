@@ -275,3 +275,9 @@ Don't forget to clean up the ropes that *you* own. This is a
 ?: rope_destroy(phrase);
 ```
 
+## Further development
+
+`rope_t` is a binary tree and as such it requires *balance it* to keep
+the height of the tree at minimum (faster).
+
+`replace` of a substring would be a nice addition.
